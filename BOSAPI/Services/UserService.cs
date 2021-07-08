@@ -9,7 +9,6 @@ using System.Text;
 using BOSAPI.Configurations;
 using BOSAPI.Contexts;
 using BOSAPI.Entities;
-using BOSAPI.Helpers;
 using BOSAPI.Interfaces;
 using BOSAPI.Models;
 using BOSAPI.Utils;
@@ -72,7 +71,11 @@ namespace BOSAPI.Services
             var key = Encoding.ASCII.GetBytes(_appSettingsConfiguration.Value.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.UserId.ToString()) }),
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim("id", user.UserId.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role)
+                }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

@@ -12,5 +12,6 @@ namespace BOSAPI.Entities
         public string UserName { get; set; }
         public string UserPassword { get; set; }
         public string UserPasswordSalt { get; set; }
+        public string Role => Entities.Role.User;
     }
 }
